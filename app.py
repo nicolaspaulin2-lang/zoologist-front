@@ -18,7 +18,7 @@ flipper_length = st.number_input('Flipper length (in mm)')
 body_mass = st.number_input('Body mass (in g)')
 sex = st.text_input('Sex', 'Male or Female')
 
-url = 'http://localhost:8001/predict'
+url = "http://localhost:8000"
 
 params = {
     'island': island,
