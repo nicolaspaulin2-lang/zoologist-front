@@ -18,7 +18,7 @@ flipper_length = st.number_input('Flipper length (in mm)')
 body_mass = st.number_input('Body mass (in g)')
 sex = st.text_input('Sex', 'Male or Female')
 
-url = "http://localhost:8001"
+url = st.secrets['API_CLOUD_URL']
 
 params = {
     'island': island,
@@ -31,4 +31,4 @@ params = {
 
 response = requests.get(url, params=params).json()
 
-st.write('Your penguin is a', response,'!')
+st.write('Your penguin is a', response['prediction'],'!')
