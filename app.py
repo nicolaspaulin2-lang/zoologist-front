@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 
 """
 # Penguin Guessr
@@ -10,31 +11,24 @@ st.markdown(
 """
 )
 
-title = st.text_input('Island', 'Biscoe, Dream or Torgersen')
-number = st.number_input('Bill length (in mm)')
-number = st.number_input('Bill depth (in mm)')
-number = st.number_input('flipper length (in mm)')
-number = st.number_input('body mass (in g)')
-title = st.text_input('Sex', 'Male or Female')
+island = st.text_input('Island', 'Biscoe')
+bill_length = st.number_input('Bill length (in mm)')
+bill_depth = st.number_input('Bill depth (in mm)')
+flipper_length = st.number_input('Flipper length (in mm)')
+body_mass = st.number_input('Body mass (in g)')
+sex = st.text_input('Sex', 'Male or Female')
 
+url = 'http://localhost:8001/predict'
 
-"""
+params = {
+    'island': island,
+    'bill_length_mm': bill_length,
+    'bill_depth_mm': bill_depth,
+    'flipper_length_mm': flipper_length,
+    'body_mass_g': body_mass,
+    'sex': sex
+}
 
-## Once we have these, let's call our API in order to retrieve a prediction
+response = requests.get(url, params=params).json()
 
-See ? No need to load a `model.joblib` file in this app, we do not even need to know anything about Data Science in order to retrieve a prediction...
-
-🤔 How could we call our API ? Of course... The `requests` package 💡
-
-What are the steps to follow in order to call an API ?
-
-1. Which url will you use? Save it in a variable so you can easily change it later...
-
-2. Let's build a dictionary containing the parameters for our API...
-
-3. Let's call our API using the `requests` package...
-
-4. Let's retrieve the prediction from the **JSON** returned by the API...
-
-## Finally, we can display the prediction to the user
-"""
+st.write('Your penguin is a', response['prediction'],'!')
